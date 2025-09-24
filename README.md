@@ -1,4 +1,4 @@
-Getting Started with Node.js & Bootstrap
+**Getting Started with Node.js & Bootstrap**
 
 This project was developed using Node.js (Express) for the backend and Bootstrap for the frontend UI.
 
