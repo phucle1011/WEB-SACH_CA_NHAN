@@ -1,0 +1,158 @@
+<%- include("../../Layouts/header.ejs") %>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Giỏ hàng</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+        <div class="container mt-5">
+            <div>
+                <a href="/orderUser" class="btn btn-primary">🛍 Xem đơn hàng</a>
+            </div>
+            <h1 class="text-center mb-4">🛒 Giỏ hàng của bạn</h1>
+
+            <% if (cart.length> 0) { %>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center bg-white">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Hình ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let totalCartPrice=0; %>
+                                <% cart.forEach(item=> {
+                                    let itemTotal = item.data.price * item.quantity;
+                                    totalCartPrice += itemTotal;
+                                    %>
+                                    <tr>
+                                        <td><img src="/client/images/<%= item.data.images %>" class="img-fluid rounded"
+                                                width="50"></td>
+                                        <td>
+                                            <%= item.data.title %>
+                                        </td>
+                                        <td>
+                                            <%= item.data.price.toLocaleString() %>đ
+                                        </td>
+                                        <td>
+                                            <form action="/cart/update" method="post"
+                                                class="update-form d-flex align-items-center justify-content-center">
+                                                <input type="hidden" name="product_id" value="<%= item.product_id %>">
+                                                <input type="number" name="quantity" value="<%= item.quantity %>"
+                                                    min="1" class="form-control w-50 text-center quantity"
+                                                    data-id="<%= item.product_id %>"
+                                                    data-price="<%= item.data.price %>">
+                                            </form>
+                                        </td>
+                                        <td class="total-price" id="total-<%= item.product_id %>">
+                                            <%= itemTotal.toLocaleString("vi-VN") %>đ
+                                        </td>
+                                        <td>
+                                            <form action="/cart/delete" method="post">
+                                                <input type="hidden" name="product_id" value="<%= item.product_id %>">
+                                                <button type="submit" class="btn btn-danger">🗑 Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-end">Tổng cộng:</td>
+                                <td id="grand-total" class="fw-bold">
+                                    <%= totalCartPrice.toLocaleString("vi-VN") %>đ
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
+                <div class=" mt-4">
+                    <form action="/cart/clear" method="post">
+                        <button type="submit" class="btn btn-warning">❌ Xóa toàn bộ giỏ hàng</button>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <a href="/checkout" class="btn btn-success btn-lg">💳 Tiến hành thanh toán</a>
+                </div>
+                <% } else { %>
+                    <div class="alert alert-info text-center">
+                        🛍 Giỏ hàng trống. Hãy thêm sản phẩm vào giỏ hàng!
+                    </div>
+                    <% } %>
+        </div>
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function updateCartTotal() {
+            let totalCartPrice = 0;
+            document.querySelectorAll(".quantity").forEach(input => {
+                let price = Number(input.dataset.price);
+                let quantity = Number(input.value);
+                totalCartPrice += price * quantity;
+            });
+
+            document.getElementById("grand-total").textContent = totalCartPrice.toLocaleString("vi-VN") + "đ";
+        }
+
+        document.querySelectorAll(".quantity").forEach(input => {
+            let productId = input.dataset.id;
+
+            let savedQuantity = localStorage.getItem("cart-" + productId);
+            if (savedQuantity) {
+                input.value = savedQuantity;
+
+                let price = Number(input.dataset.price);
+                let totalPriceElement = document.getElementById("total-" + productId);
+                totalPriceElement.textContent = (price * savedQuantity).toLocaleString("vi-VN") + "đ";
+            }
+
+            input.addEventListener("input", function () {
+                let price = Number(this.dataset.price);
+                let quantity = Number(this.value);
+
+                if (quantity < 1) {
+                    this.value = 1;
+                    quantity = 1;
+                }
+
+                localStorage.setItem("cart-" + productId, quantity);
+
+                let totalPriceElement = document.getElementById("total-" + productId);
+                totalPriceElement.textContent = (price * quantity).toLocaleString("vi-VN") + "đ";
+
+                updateCartTotal();
+
+                let form = this.closest("form");
+                let formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Cập nhật thành công", data);
+                    })
+                    .catch(error => console.error("Lỗi cập nhật:", error));
+            });
+        });
+
+        updateCartTotal();
+    });
+</script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+
+    <%- include("../../Layouts/footer.ejs") %>

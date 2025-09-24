@@ -1,0 +1,971 @@
+{
+	"info": {
+		"_postman_id": "2b9a458e-1cdb-4c12-b6e7-c0cbcf10f6fb",
+		"name": "nodejs_asm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42145249",
+		"_collection_link": "https://node11-8832.postman.co/workspace/node-Workspace~11f0733f-0c9f-4cc6-853b-f85dac078329/collection/42145249-2b9a458e-1cdb-4c12-b6e7-c0cbcf10f6fb?action=share&source=collection_link&creator=42145249"
+	},
+	"item": [
+		{
+			"name": "Danh mục",
+			"item": [
+				{
+					"name": "Danh sách danh mục",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/categories",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm danh mục",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "categoryName",
+									"value": "hehe",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/categories",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết danh mục",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/categories/2",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa danh mục",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/categories/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa loại sản phẩm",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "categoryName",
+									"value": "hehe update",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/categories/15",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"categories",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sản phẩm",
+			"item": [
+				{
+					"name": "Danh sách sản phẩm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/products",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm sản phẩm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": " Nhà lãnh đạo tương lai ",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": " Jacob Morgan",
+									"type": "text"
+								},
+								{
+									"key": "publisher",
+									"value": " Nhà xuất bản Thế Giới",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": " 200.000",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"value": " 10.webp",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": " create",
+									"type": "text"
+								},
+								{
+									"key": "shortDescription",
+									"value": " hrhe",
+									"type": "text"
+								},
+								{
+									"key": "publicationDate",
+									"value": " 2024-12-28",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": " 2",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/NodeJS/Ass/phuclnhpc09097_assignment/public/assets/client/images/sach1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/products",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết sản phẩm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/products/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa sản phẩm",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/products/2",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa sản phẩm",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": " Nhà lãnh đạo tương lai  update",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": " Jacob Morgan",
+									"type": "text"
+								},
+								{
+									"key": "publisher",
+									"value": " Nhà xuất bản Thế Giới",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": " 200.000",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"value": " 10.webp",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": " create",
+									"type": "text"
+								},
+								{
+									"key": "shortDescription",
+									"value": " hrhe",
+									"type": "text"
+								},
+								{
+									"key": "publicationDate",
+									"value": " 2024-12-28",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": " 2",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/HOANG PHUC/Pictures/th.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/products/30",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"products",
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Danh sách comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/comments",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "content",
+									"value": " Sản phẩm rất tốt!",
+									"type": "text"
+								},
+								{
+									"key": "productId",
+									"value": " 3",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": " 10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/comments",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/comments/4",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"comments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/comments/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "content",
+									"value": "  Sản phẩm rất tốt update",
+									"type": "text"
+								},
+								{
+									"key": "productId",
+									"value": "  3",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "  10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/comments/33",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"comments",
+								"33"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Danh sách user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "name",
+								"value": "Nguyen Thi Lan update",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "12345678",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/users",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "name",
+								"value": "phuc",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "12345678",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "phuc",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/users",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/users/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/users/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Nguyen Thi Lan update lan 1",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "nguyenlan@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "012345678",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Hanoi, Vietnam",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"value": "1740226981335-sach3.jpg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/users/6",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"users",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Đơn hàng",
+			"item": [
+				{
+					"name": "Danh sách order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/orders",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": " 3",
+									"type": "text"
+								},
+								{
+									"key": "total_price",
+									"value": " 150000.00",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": " 2025-02-19 15:23:07",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": " phuc",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": " dfgea",
+									"type": "text"
+								},
+								{
+									"key": "payment_method_id",
+									"value": " 1",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": " phuc@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/orders",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/orders/4",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"orders",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/orders/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": " 3",
+									"type": "text"
+								},
+								{
+									"key": "total_price",
+									"value": " 150000.00",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": " 2025-02-19 08:23:07",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": " 2",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": " phuc",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": " dfgea update",
+									"type": "text"
+								},
+								{
+									"key": "payment_method_id",
+									"value": " 1",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": " phuc@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/orders/70",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"orders",
+								"70"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chi tiết đơn hàng",
+			"item": [
+				{
+					"name": "Danh sách order_detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/order_detail",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"order_detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm order_detail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "quantity",
+									"value": " 4",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": " 100000.00",
+									"type": "text"
+								},
+								{
+									"key": "product_id",
+									"value": " 29",
+									"type": "text"
+								},
+								{
+									"key": "order_id",
+									"value": " 66",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/order_detail",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"order_detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chi tiết order_detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/order_detail/4",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"order_detail",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa order_detail",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}api/order_detail/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"order_detail",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sửa order_detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "quantity",
+									"value": " 7",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": " 100000.00",
+									"type": "text"
+								},
+								{
+									"key": "product_id",
+									"value": " 2",
+									"type": "text"
+								},
+								{
+									"key": "order_id",
+									"value": " 1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/order_detail/6",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"order_detail",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

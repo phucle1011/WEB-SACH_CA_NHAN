@@ -1,0 +1,87 @@
+<%- include("../../Layouts/header") %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Danh sách các loại sản phẩm</h5>
+                            <table class="table table-bordered">
+                                <form action="/admin/categories" method="GET" class="mb-3">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" class="form-control"
+                                            placeholder="Tìm kiếm theo tên hoặc email..." value="<%= keyword || '' %>">
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </form> <br>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên loại sản phẩm</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% categories.forEach(function(item) { %>
+                                        <tr>
+                                            <td>
+                                                <%= item.categoryId %>
+                                            </td>
+                                            <td>
+                                                <%= item.categoryName %>
+                                            </td>
+                                            <td>
+                                                <%= item.status==1 ? 'Hiển thị' : 'Ẩn' %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/categories/edit/<%= item.categoryId %>"
+                                                    class="btn btn-primary me-2">Sửa</a>
+                                                <form action="/admin/categories/delete/<%= item.categoryId %>"
+                                                    method="POST" style="display: inline-block;"
+                                                    onsubmit="return confirm('Chắc chắn muốn xoá loại sản phẩm này?')">
+                                                    <button type="submit" class="btn btn-danger">Xoá</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <% if (currentPage> 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="/admin/categories?page=<%= currentPage - 1 %>&keyword=<%= keyword %>">«
+                                            Trước</a>
+                                    </li>
+                                    <% } %>
+
+                                        <% for (let i=1; i <=totalPages; i++) { %>
+                                            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                                <a class="page-link"
+                                                    href="/admin/categories?page=<%= i %>&keyword=<%= keyword %>">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                            <% } %>
+
+                                                <% if (currentPage < totalPages) { %>
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="/admin/categories?page=<%= currentPage + 1 %>&keyword=<%= keyword %>">Tiếp
+                                                            »</a>
+                                                    </li>
+                                                    <% } %>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../../Layouts/footer") %>

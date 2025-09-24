@@ -1,0 +1,40 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết bình luận</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <td><%= comment.commentId %></td>
+                            </tr>
+                            <tr>
+                                <th>Nội dung</th>
+                                <td><%= comment.content %></td>
+                            </tr>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <td><%= comment.productId %></td>
+                            </tr>
+                            <tr>
+                                <th>Ngày tạo</th>
+                                <td><%= comment.createdAt %></td>
+                            </tr>
+                            <tr>
+                                <th>Ngày cập nhật</th>
+                                <td><%= comment.updatedAt %></td>
+                            </tr>
+                        </table>
+                        <a href="/admin/comments" class="btn btn-secondary">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>

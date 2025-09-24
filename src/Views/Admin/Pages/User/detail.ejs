@@ -1,0 +1,48 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết người dùng</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <td><%= user.userId %></td>
+                            </tr>
+                            <tr>
+                                <th>Tên</th>
+                                <td><%= user.name %></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><%= user.email %></td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td><%= user.phoneNumber %></td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ</th>
+                                <td><%= user.address %></td>
+                            </tr>
+                            <tr>
+                                <th>Vai trò</th>
+                                <td><%= user.role %></td>
+                            </tr>
+                            <tr>
+                                <th>Ngày tạo</th>
+                                <td><%= user.createdAt %></td>
+                            </tr>
+                        </table>
+                        <a href="/admin/users" class="btn btn-secondary">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>

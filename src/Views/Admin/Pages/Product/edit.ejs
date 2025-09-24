@@ -1,0 +1,64 @@
+<%- include("../../Layouts/header") %>
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <h2 class="page-title">Chỉnh sửa sản phẩm</h2>
+        <form action="/admin/products/edit/<%= product.productId %>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Tên sản phẩm*</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= product.title %>" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Tác giả*</label>
+                <input type="text" class="form-control" id="author" name="author" value="<%= product.author %>" required>
+            </div>
+            <div class="form-group">
+                <label for="categorie">Loại sản phẩm*</label>
+                <select class="form-control" id="categorie" name="categorie" required>
+                    <option value="" disabled selected>Chọn loại sản phẩm</option>
+                    <% categories.forEach(function(category) { %>
+                        <option value="<%= category.categoryId %>" <%= product.categoryId == category.categoryId ? 'selected' : '' %> >
+                            <%= category.categoryName %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>            
+            <div class="form-group">
+                <label for="publisher">Nhà xuất bản*</label>
+                <input type="text" class="form-control" id="publisher" name="publisher" value="<%= product.publisher %>" required>
+            </div>
+            <div class="form-group">
+                <label for="publicationDate">Ngày xuất bản*</label>
+                <input type="date" class="form-control" id="publicationDate" name="publicationDate" value="<%= product.publicationDate %>" required>
+            </div>                       
+            <div class="form-group">
+                <label for="price">Giá*</label>
+                <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="shortDescription">Mô tả ngắn*</label>
+                <textarea class="form-control" id="shortDescription" name="shortDescription"><%= product.shortDescription %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả dài*</label>
+                <textarea class="form-control" id="description" name="description" rows="5"><%= product.description %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="file">Ảnh hiện tại</label><br>
+                <img src="/client/images/<%= product.images %>" alt="Current Image" width="150"><br><br>
+                <label for="file">Ảnh mới (nếu có)</label>
+                <input type="file" class="form-control" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
+        </form>
+        
+    </div>
+</div>
+
+<script>
+    CKEDITOR.replace('shortDescription');
+    CKEDITOR.replace('description');
+</script>
+
+<%- include("../../Layouts/footer") %>

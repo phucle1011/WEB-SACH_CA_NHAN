@@ -1,0 +1,86 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Lịch sử mua hàng</h5>
+
+                        <!-- Form tìm kiếm -->
+                        <form action="/admin/orders/history" method="GET" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control" 
+                                    placeholder="Tìm kiếm theo tên hoặc email..." value="<%= keyword || '' %>">
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+
+                        <!-- Bảng danh sách đơn hàng hoàn thành -->
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Khách hàng</th>
+                                        <th>Email</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (orders.length > 0) { %>
+                                        <% orders.forEach(function(order) { %>
+                                            <tr>
+                                                <td><%= order.id %></td>
+                                                <td><%= order.created_at %></td>
+                                                <td><%= order.user_name %></td>
+                                                <td><%= order.user_email %></td>
+                                                <td><%= Number(order.total_price).toLocaleString('vi-VN') %> VND</td>
+                                                <td><span class="badge bg-success"><%= order.status %></span></td>
+                                                <td>
+                                                    <a href="/admin/orders/history/<%= order.id %>" class="btn btn-info">Xem</a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="7" class="text-center">Không có đơn hàng hoàn thành.</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <% if (currentPage > 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/admin/orders/history?page=<%= currentPage - 1 %>&keyword=<%= keyword %>">« Trước</a>
+                                    </li>
+                                <% } %>
+
+                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/orders/history?page=<%= i %>&keyword=<%= keyword %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+
+                                <% if (currentPage < totalPages) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/admin/orders/history?page=<%= currentPage + 1 %>&keyword=<%= keyword %>">Tiếp »</a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>

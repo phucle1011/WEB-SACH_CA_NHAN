@@ -1,0 +1,130 @@
+<%- include("../../Layouts/header") %>
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">QUẢN LÝ SẢN PHẨM</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- Container fluid -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Danh sách sản phẩm</h5>
+                        <div class="table-responsive">
+                            <form action="/admin/products" method="GET" class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm theo tên hoặc email..." value="<%= keyword || '' %>">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>   
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên</th>
+                                        <th>Giá</th>
+                                        <th>Loại</th>
+                                        <th>Ảnh</th>
+                                        <th>Tác giả</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% products.forEach(function(item) { %>
+                                    <tr>
+                                        <td><%= item.productId %></td>
+                                        <td><%= item.title %></td>
+                                        <td><%= item.price %></td>
+                                        <td><%= item.categoryName || 'Chưa xác định' %></td> <!-- Hiển thị tên loại sản phẩm từ bảng categories -->
+                                        <td><img src="/client/images/<%= item.images %>" alt="<%= item.title %>" class="img-thumbnail" width="50"></td>
+                                        <td><%= item.author %></td>
+                                        <td class="d-flex align-items-center">
+                                            <a href="/admin/products/edit/<%= item.productId %>" class="btn btn-primary me-2 mt-3">Sửa</a>
+                                            <form action="/admin/products/delete/<%= item.productId %>" method="post" onsubmit="return confirm('Chắc chắn muốn xoá sản phẩm này?')">
+                                                <button type="submit" class="btn btn-danger mt-3">Xoá</button>
+                                            </form>
+                                        </td>                                                                                                                      
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <% if (currentPage > 1) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="/admin/products?page=<%= currentPage - 1 %>&keyword=<%= keyword %>">« Trước</a>
+                                        </li>
+                                    <% } %>
+                            
+                                    <% for (let i = 1; i <= totalPages; i++) { %>
+                                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/products?page=<%= i %>&keyword=<%= keyword %>"><%= i %></a>
+                                        </li>
+                                    <% } %>
+                            
+                                    <% if (currentPage < totalPages) { %>
+                                        <li class="page-item">
+                                            <a class="page-link" href="/admin/products?page=<%= currentPage + 1 %>&keyword=<%= keyword %>">Tiếp »</a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-id");
+    
+                fetch("/cart/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ productId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Sản phẩm đã được thêm vào giỏ hàng!");
+                    } else {
+                        alert("Có lỗi xảy ra, vui lòng thử lại.");
+                    }
+                })
+                .catch(error => console.error("Lỗi:", error));
+            });
+        });
+    });
+    </script>
+    
+
+<%- include("../../Layouts/footer") %>

@@ -1,0 +1,114 @@
+<%- include("../../Layouts/header.ejs") %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xem Đơn Hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">📦 Danh sách Đơn hàng của bạn</h1>
+        
+        <% if (orders.length > 0) { %>
+            <div class="list-group">
+                <% orders.forEach(order => { %>
+                    <div class="list-group-item mb-3">
+                        <table class="table table-bordered mt-2">
+                            <thead>
+                                <tr>
+                                    <th>Đơn hàng ID:</th>
+                                    <th>Ngày đặt hàng:</th>
+                                    <th>Trạng thái:</th>
+                                    <th>Tổng cộng:</th>
+                                    <th>Hành động:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><%= order.id %></td>
+                                    <td><%= new Date(order.created_at).toLocaleString() %></td>
+                                    <td>
+                                        <% if (order.status === 'Hoàn thành') { %>
+                                            <form action="/orders/confirm-completion/<%= order.id %>" method="POST" class="d-inline-block">
+                                                <button type="submit" class="btn btn-success">Xác nhận Hoàn thành</button>
+                                            </form>
+                                        <% } else if (order.status === 'Đã giao hàng thành công') { %>
+                                            <span class="text-success">Đơn hàng đã giao thành công!</span>
+                                        <% } else { %>
+                                            <%= order.status %>
+                                        <% } %>
+                                        
+                                    </td>
+                                    <td><%= order.total_price.toLocaleString("vi-VN") %>đ</td>
+                                    <td>
+                                        <button class="btn btn-info" onclick="toggleDetails('<%= order.id %>')">Xem</button>
+
+                                        <% if (order.status === 'Chờ xác nhận') { %>
+                                            <form action="/orders/delete/<%= order.id %>" method="POST" class="d-inline-block">
+                                                <button type="submit" class="btn btn-danger">Hủy</button>
+                                            </form>                                                                                      
+                                        <% } else { %>
+                                            <button class="btn btn-danger" disabled>Không thể hủy</button>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="collapse mt-3" id="order-details-<%= order.id %>">
+                            <% if (order.details && order.details.length > 0) { %>
+                                <table class="table table-bordered mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Tên</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><%= order.id %></td>
+                                            <td><%= order.name %></td>
+                                            <td><%= order.phone %></td>
+                                            <td><%= order.address %></td>
+                                            <td><%= order.status %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            <% } else { %>
+                                <div class="alert alert-warning">Không có chi tiết sản phẩm cho đơn hàng này.</div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="alert alert-info text-center">
+                Bạn chưa có đơn hàng nào.
+            </div>
+        <% } %>
+
+        <div class="d-flex justify-content-end mt-4">
+            <a href="/cart" class="btn btn-secondary">Quay lại cửa hàng</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleDetails(orderId) {
+            const collapseElement = document.getElementById('order-details-' + orderId);
+            if (collapseElement.classList.contains('show')) {
+                collapseElement.classList.remove('show');
+            } else {
+                collapseElement.classList.add('show');
+            }
+        }
+    </script>
+</body>
+
+<%- include("../../Layouts/footer.ejs") %>

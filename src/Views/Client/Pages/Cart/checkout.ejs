@@ -1,0 +1,150 @@
+<%- include("../../Layouts/header.ejs") %>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Thanh toán</h1>
+
+        <div class="row ">
+            <div class="col-md-6">
+                <h4 class="text-center">Thông tin đơn hàng</h4>
+                <% if (cart.length> 0) { %>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% cart.forEach((item, index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td>
+                                        <%= item.name %>
+                                    </td>
+                                    <td>
+                                        <%= item.price.toLocaleString() %>đ
+                                    </td>
+                                    <td class="checkout-quantity" data-id="<%= item.product_id %>">
+                                        <%= item.quantity %>
+                                    </td>
+                                    <td class="total-checkout" id="checkout-total-<%= item.product_id %>">
+                                        <%= (item.price * item.quantity).toFixed(3).toLocaleString("vi-VN") %>đ
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <h2 id="checkout-total">Tổng tất cả: <%= totalPrice.toFixed(3).toLocaleString("vi-VN") %>đ</h2>
+                    <% } else { %>
+                        <p class="text-center text-danger">Giỏ hàng của bạn đang trống.</p>
+                        <% } %>
+            </div>
+
+            <div class="col-md-6">
+                <h4 class="text-center">Nhập thông tin giao hàng</h4>
+                <% if (isLogin) { %>
+                    <form action="/orders" method="POST" class="card card-body">
+                        <div class="form-group">
+                            <label for="name">Tên*</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="<%= checkout_info.name %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại*</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                value="<%= checkout_info.phone %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="<%= checkout_info.email %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Địa chỉ*</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                value="<%= checkout_info.address %>" required>
+                        </div>
+
+                        <input type="hidden" name="cart" value="<%= JSON.stringify(cart) %>">
+
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-dark">Thanh toán khi nhận hàng</button>
+                        </div>
+                    </form>
+
+                    <!-- <form id="checkout-form" action="/api/momo/create" method="POST" style="margin-left: 200px;">
+                        <input type="hidden" name="orderInfo" value="Thanh toán đơn hàng ABC">
+                        <input type="hidden" name="amount" value="100000">
+                    
+                        <button type="submit" class="btn btn-momo d-flex align-items-center justify-content-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo" class="momo-icon" width="50px">
+                            <span>Thanh toán bằng MoMo</span>
+                        </button>
+                    </form> -->
+                    
+                    <% } else { %>
+                        <h4 class="text-center text-danger">Vui lòng đăng nhập để thanh toán</h4>
+                        <div class="text-center mt-3">
+                            <a href="/login" class="btn btn-primary">Đăng nhập</a>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function updateCheckoutTotal() {
+                let totalCheckoutPrice = 0;
+                document.querySelectorAll(".checkout-quantity").forEach(td => {
+                    let productId = td.dataset.id;
+                    let quantity = localStorage.getItem("cart-" + productId) || td.textContent;
+                    let price = Number(td.closest("tr").querySelector("td:nth-child(3)").textContent.replace("đ", "").replace(/,/g, ""));
+
+                    td.textContent = quantity;
+                    let totalPriceElement = document.getElementById("checkout-total-" + productId);
+                    let total = price * Number(quantity);
+                    totalPriceElement.textContent = total.toFixed(3).toLocaleString("vi-VN") + "đ";
+                    totalCheckoutPrice += total;
+                });
+                document.getElementById("checkout-total").textContent = "Tổng tất cả: " + totalCheckoutPrice.toFixed(3).toLocaleString("vi-VN") + "đ";
+            }
+
+            updateCheckoutTotal();
+        });
+        document.getElementById("momo-payment-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const orderId = document.getElementById("orderId").value;
+            const total = document.getElementById("totalAmount").value;
+
+            try {
+                const response = await fetch("/momo/create-payment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ orderId, total })
+                });
+
+                const data = await response.json();
+                if (data.payUrl) {
+                    window.location.href = data.payUrl;
+                } else {
+                    alert("Lỗi khi nhận URL thanh toán từ MoMo!");
+                    console.error("Response từ MoMo:", data);
+                }
+            } catch (error) {
+                alert("Lỗi khi gửi yêu cầu thanh toán!");
+                console.error("Fetch error:", error);
+            }
+        });
+    </script>
+
+    <%- include("../../Layouts/footer.ejs") %>

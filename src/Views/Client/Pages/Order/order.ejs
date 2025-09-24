@@ -1,0 +1,96 @@
+<%- include("../../Layouts/header") %>
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Danh sách của bạn đơn hàng</h5>
+                            <% if (!isLoggedIn) { %>
+                                <div class="text-center">
+                                    <p>Bạn chưa đăng nhập. Hãy đăng nhập để xem đơn
+                                        hàng.</p>
+                                    <a href="/login" class="btn btn-primary">Đăng
+                                        nhập</a>
+                                </div>
+                                <% } else { %>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped text-center align-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Tên khách hàng</th>
+                                                    <th>Giá trị đơn hàng</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Thời gian đặt</th>
+                                                    <th>Hành động</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% orders.forEach(order=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= order.order_id %>
+                                                        </td>
+                                                        <td>
+                                                            <%= order.name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= order.total_price %> VND
+                                                        </td>
+                                                        <td>
+                                                            <%= order.status %>
+                                                        </td>
+                                                        <td>
+                                                            <%= order.created_at %>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-control status-select" data-order-id="<%= order.id %>">
+                                                                <% ["Chờ xác nhận", "Đã xác nhận", "Đang giao", "Hoàn thành", "Đã hủy"].forEach(function(status) { %>
+                                                                    <option value="<%= status %>" <%= order.status === status ? "selected" : "" %>><%= status %></option>
+                                                                <% }); %>
+                                                            </select>
+                                                        </td>
+                                                        <td><%= order.created_at %></td>
+                                                        <td>
+                                                            <a href="/admin/orders/detail/<%= order.id %>" class="btn btn-info me-2">Xem chi tiết</a>
+                                                            <% if (order.status === "Chờ xác nhận") { %>
+                                                                <button class="btn btn-danger cancel-order" data-order-id="<%= order.id %>">Hủy đơn</button>
+                                                            <% } else { %>
+                                                                <button class="btn btn-danger" disabled>Không thể hủy</button>
+                                                            <% } %>
+                                                        </td>          
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll(".cancel-order").forEach(button => {
+            button.addEventListener("click", function () {
+                const orderId = this.dataset.orderId;
+                if (confirm("Bạn có chắc muốn hủy đơn hàng này không?")) {
+                    fetch(`/admin/orders/cancel/${orderId}`, { method: "POST" })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            if (data.success) {
+                                document.querySelector(`tr[data-order-id="${orderId}"]`).remove();
+                            }
+                        })
+                        .catch(error => console.error("Lỗi:", error));
+                }
+            });
+        });
+    </script>
+
+    <%- include("../../Layouts/footer") %>

@@ -1,0 +1,88 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Thông tin khách hàng</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">ID Đơn hàng:</label>
+                                <input type="text" class="form-control" value="<%= customer.order_id %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Họ và Tên:</label>
+                                <input type="text" class="form-control" value="<%= customer.name %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Số điện thoại:</label>
+                                <input type="text" class="form-control" value="<%= customer.phone %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email:</label>
+                                <input type="text" class="form-control" value="<%= customer.email %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Địa chỉ:</label>
+                                <input type="text" class="form-control" value="<%= customer.address %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Phương thức thanh toán:</label>
+                                <input type="text" class="form-control" value="<%= customer.payment_method %>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ngày tạo đơn hàng:</label>
+                                <input type="text" class="form-control" value="<%= customer.created_at %>" readonly>
+                            </div>
+                        </form>
+                    </div>
+                </div>                
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết đơn hàng</h5>
+                        <table class="table table-bordered table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th>Trạng thái</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th class="text-end">Giá tiền (Đơn hàng)</th>
+                                    <th class="text-end">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% let totalAmount = 0; %>
+                                <% orderDetails.forEach(order => { 
+                                    let subtotal = order.quantity * order.total_price; 
+                                    totalAmount += subtotal;
+                                %>
+                                    <tr>
+                                        <td class="align-middle"><%= order.status %></td>
+                                        <td class="align-middle"><%= order.product_name %></td>
+                                        <td class="align-middle"><%= order.quantity %></td>
+                                        <td class="text-end align-middle"><%= Number(order.total_price).toLocaleString('vi-VN') %> đ</td>
+                                        <td class="text-end align-middle"><%= Number(subtotal).toLocaleString('vi-VN') %> đ</td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4" class="text-end">Tổng cộng:</th>
+                                    <th class="text-end"><%= totalAmount.toLocaleString('vi-VN') %> đ</th>
+                                </tr>
+                            </tfoot>
+                        </table>                        
+                        <div class="d-flex justify-content-between">
+                            <a href="/admin/orders" class="btn btn-secondary">Quay lại</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>

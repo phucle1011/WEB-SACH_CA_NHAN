@@ -1,0 +1,24 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <h2 class="page-title">Chỉnh sửa loại sản phẩm</h2>
+        <form action="/admin/categories/edit/<%= category.categoryId %>" method="POST">
+            <div class="form-group">
+                <label for="categoryName">Tên loại sản phẩm*</label>
+                <input type="text" class="form-control" id="categoryName" name="categoryName" value="<%= category.categoryName %>" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái*</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="" disabled selected>Chọn trạng thái</option>
+                    <option value="1" <%= category.status === 1 ? 'selected' : '' %>>Hiển thị</option>
+                    <option value="0" <%= category.status === 0 ? 'selected' : '' %>>Ẩn</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật loại sản phẩm</button>
+        </form>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>

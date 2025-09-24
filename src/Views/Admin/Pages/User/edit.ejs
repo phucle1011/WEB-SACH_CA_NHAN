@@ -1,0 +1,45 @@
+<%- include("../../Layouts/header") %>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <h2 class="page-title">Chỉnh sửa người dùng</h2>
+        <form action="/admin/users/edit/<%= user.userId %>" method="POST">
+            <div class="form-group">
+                <label for="name">Tên người dùng*</label>
+                <input type="text" class="form-control" id="name" name="name" 
+                    value="<%= user.name %>" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" class="form-control" id="email" name="email" 
+                    value="<%= user.email %>" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu*</label>
+                <input type="password" class="form-control" id="password" name="password"
+                value="<%= user.password %>" >
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Số điện thoại*</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" 
+                    value="<%= user.phoneNumber %>" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ*</label>
+                <input type="text" class="form-control" id="address" name="address" 
+                    value="<%= user.address %>" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Vai trò*</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="Admin" <%= user.role === "Admin" ? "selected" : "" %>>Admin</option>
+                    <option value="User" <%= user.role === "User" ? "selected" : "" %>>User</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật người dùng</button>
+            <a href="/admin/users" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</div>
+
+<%- include("../../Layouts/footer") %>
